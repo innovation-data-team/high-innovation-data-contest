@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "team_id": "T0001",
+  "stage": "P1",
+  "dataset_version": "v1.0.0",
+  "generated_at": "2026-11-08T00:00:00+08:00",
+  "record_counts": {
+    "jd_keep_ids.csv": 0,
+    "jd_drop_summary.csv": 0,
+    "dedup_groups.csv": 0,
+    "std_job.csv": 0,
+    "jd_job_map.csv": 0,
+    "synonym_pairs.csv": 0,
+    "skill.csv": 0
+  },
+  "official_assets_version": "1.0",
+  "external_datasets": [],
+  "reproduction": {
+    "command": "python 05_代码/main.py",
+    "runtime_hours": 0,
+    "hardware": ""
+  }
+}

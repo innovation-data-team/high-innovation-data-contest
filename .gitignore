@@ -1,0 +1,36 @@
+# ---- 官方原始数据（大文件，不入库，本地保留）----
+data/
+*.xlsx
+*.xls
+
+# ---- 官方指导文件原件（已提炼进 README）----
+*.docx
+*.doc
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# ---- 临时与解包产物 ----
+unpacked_*/
+*.tmp
+*.bak
+Thumbs.db
+.DS_Store
+
+# ---- 大体积中间产物（提交包禁止塞入，仓库同样不入库）----
+*.parquet
+*.pkl
+*.feather
+outputs/
+checkpoints/
+
+# ---- IDE ----
+.idea/
+.vscode/
+
+# ---- 注意：01~06 提交包目录与 00_manifest.json 必须入库，勿加入上方规则 ----
