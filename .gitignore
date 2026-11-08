@@ -3,7 +3,7 @@ data/
 data/**
 *.xlsx
 *.xls
-
+*.csv
 
 # ---- 官方指导文件原件（附录 A/B/C 已提取进 05_代码/*.csv）----
 *.docx
