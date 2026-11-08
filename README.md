@@ -25,35 +25,38 @@
 │   ├─ main.py                    # 一键复现入口（Python 3）
 │   ├─ prepare_data.py            # 本地阶段数据准备（读取 data/，随代码分发）
 │   ├─ requirements.txt           # 依赖清单
-│   ├─ appendix_a_city_code.csv   # 附录 A：地市 → 行政区划代码
-│   ├─ appendix_b_education.csv   # 附录 B：学历原始值 → 规范枚举
-│   ├─ appendix_c_industry.csv    # 附录 C：行业 → 行业分类代码
-│   └─ （其余 Python 源码放这里）
+│   └─ src/                       # 其余 Python 源码按模块放这里
 └─ 06_校验/
     └─ validate_report.json  # validate.py 输出（当前为占位）
 ```
 
 仓库根目录的协作文件（README、.gitignore）打包时**不会**放入 zip。
+附录 A/B/C 三张映射表已移到本地 `data/` 根目录，不在提交包内（见第二、三节）。
 
 ### 附录映射表（从指导文件 Word 附录 A/B/C 提取）
 
-| 文件 | 来源 | 列 | 用途 |
+| 文件（位于 `data/` 根目录） | 来源 | 列 | 用途 |
 | --- | --- | --- | --- |
-| `appendix_a_city_code.csv` | 附录 A 广东省 21 地市 | `city_name` / `city_code` / `city_full_name` | `jd_keep_ids.city_code` 查表；非广东值及空值留空，`is_valid` 可标 0 |
-| `appendix_b_education.csv` | 附录 B 学历原始值 | `education_raw` / `education_std` / `note` | `jd_keep_ids.education` 映射 |
-| `appendix_c_industry.csv` | 附录 C 行业（节选，选填） | `business_raw` / `industry_code` / `industry_name` | `jd_keep_ids.industry_code` 查表；表里没有的可按 GB/T 4754-2017 推断，推断不了留空 |
+| `data/appendix_a_city_code.csv` | 附录 A 广东省 21 地市 | `city_name` / `city_code` / `city_full_name` | `jd_keep_ids.city_code` 查表；非广东值及空值留空，`is_valid` 可标 0 |
+| `data/appendix_b_education.csv` | 附录 B 学历原始值 | `education_raw` / `education_std` / `note` | `jd_keep_ids.education` 映射 |
+| `data/appendix_c_industry.csv` | 附录 C 行业（节选，选填） | `business_raw` / `industry_code` / `industry_name` | `jd_keep_ids.industry_code` 查表；表里没有的可按 GB/T 4754-2017 推断，推断不了留空 |
 
-这三张表是 `main.py` 复现时做字段转换的查表数据，故放在 `05_代码/` 随提交包分发。它们属于**自建辅助映射表**，不是 01~03 的产出表，表头为自建命名（指导文件「表头照抄」铁律只约束 01~03 各表）。原始 Word 中括号内的中文名称已拆为独立列，代码列保留原文组合值（如 `C34/C35`）。
+这三张表是 `main.py` 复现时做字段转换的查表数据，现放在本地 `data/` 根目录（与官方原始数据同目录）。它们属于**自建辅助映射表**，不是 01~03 的产出表，表头为自建命名（指导文件「表头照抄」铁律只约束 01~03 各表）。原始 Word 中括号内的中文名称已拆为独立列，代码列保留原文组合值（如 `C34/C35`）。
+
+注意：`data/` 被 `.gitignore` 排除，这三张表不会入库、也不在提交包内。队友 `clone` 后需自行按附录提取或从团队内部获取，放到 `data/` 根目录，否则 `main.py` 会因缺表失败；若后续官方校验要求查表数据随包分发，需再放回 `05_代码/`。
 
 ## 二、本地数据目录 `data/`（严禁入库）
 
-`data/` 整体被 `.gitignore` 排除。队友 `clone` 后需自行从官方渠道下载原始文件放到 `data/` 根目录，再运行 `prepare_data.py` 生成三阶段输入：
+`data/` 整体被 `.gitignore` 排除。队友 `clone` 后需自行从官方渠道下载原始文件，并把附录 A/B/C 三张映射表放到 `data/` 根目录，再运行 `prepare_data.py` 生成三阶段输入：
 
 ```text
-data/                                      ← 官方原始文件放这里（不入库、不打包）
+data/                                      ← 官方原始文件与查表数据放这里（不入库、不打包）
 ├─ 团队预览_5万条.xlsx                     # 官方原始 JD，50000 行 × 19 列
 ├─ 数据集字段解释.xlsx                     # 官方字段字典，18 个字段
-├─ 初赛赛事指导文件（参赛者版） (2).docx     # 规范原件（附录已提取到 05_代码/）
+├─ 初赛赛事指导文件（参赛者版） (2).docx     # 规范原件（附录已提取到 data/）
+├─ appendix_a_city_code.csv                # 附录 A：地市 → 行政区划代码
+├─ appendix_b_education.csv                # 附录 B：学历原始值 → 规范枚举
+├─ appendix_c_industry.csv                 # 附录 C：行业 → 行业分类代码
 ├─ 01_数据治理/                           # 阶段一输入
 │   ├─ raw_jd_full.csv                    # 50000 × 19，全量原始字段
 │   └─ field_dictionary.csv                # 18 行，原始字段解释
@@ -71,7 +74,7 @@ data/                                      ← 官方原始文件放这里（不
 
 补充说明：
 
-- 三份 CSV 均为 UTF-8 无 BOM、RFC 4180（`requirement` 含换行/逗号时自动加双引号），由 `05_代码/prepare_data.py` 生成，属于**可重建的本地中间产物，不入库、不打包**。
+- 三份阶段输入 CSV 均为 UTF-8 无 BOM、RFC 4180（`requirement` 含换行/逗号时自动加双引号），由 `05_代码/prepare_data.py` 生成，属于**可重建的本地中间产物，不入库、不打包**；附录 A/B/C 三张映射表同在 `data/`，但不是中间产物，不能删。
 - `02_岗位归一化/` 还需《国家职业分类大典（2022 版）》细类代码表、官方映射表等资产（对应 `00_manifest.json` 的 `official_assets_version`）。官方发布后放入该目录，并在 manifest 登记版本号。
 - 不要把全量清洗文本或大体积中间文件塞进提交包（指导文件常见错误 12）。
 
@@ -116,7 +119,7 @@ python validate.py --package P1_<团队编号>.zip --stage P1
 ## 六、待办
 
 - [ ] 替换 `00_manifest.json` 中的占位 `team_id`（T0001 → 实际团队编号）
-- [ ] 队友各自把官方原始文件放入本地 `data/` 根目录并运行 `prepare_data.py`（严禁入库 / 打包）
+- [ ] 队友各自把官方原始文件与附录 A/B/C 三张映射表放入本地 `data/` 根目录并运行 `prepare_data.py`（严禁入库 / 打包）
 - [ ] 官方大典代码表等资产发布后放入 `data/02_岗位归一化/`，登记 `official_assets_version`
 - [ ] 撰写 `04_说明文档/数据集说明文档.pdf`
 - [ ] 运行 `validate.py` 生成真实 `06_校验/validate_report.json`
