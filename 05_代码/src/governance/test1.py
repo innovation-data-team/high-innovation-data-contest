@@ -1,3 +1,0 @@
-#dfdvdfklvnbdfbndffgfgfgfgfgf
-
-print('hello world')
